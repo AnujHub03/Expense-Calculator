@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useContext, useEffect } from "react";
 import Summary from "../summary/Summary";
-import ExpenseView from "../expense-view/ExpenseView";
+import ExpenseView from "../Pages/ExpenseView";
 import { GlobContext } from "../context/Context";
 
 const Home = () => {
