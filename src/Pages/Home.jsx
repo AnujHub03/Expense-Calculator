@@ -9,7 +9,7 @@ import {
 import React, { useContext, useEffect } from "react";
 import Summary from "../summary/Summary";
 import ExpenseView from "../Pages/ExpenseView";
-import { GlobContext } from "../context/Context";
+import { GlobContext } from "../Pages/Context";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
