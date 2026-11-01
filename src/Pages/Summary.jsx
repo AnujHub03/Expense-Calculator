@@ -1,7 +1,7 @@
 import { Box, Flex, Heading,Text } from "@chakra-ui/react";
 import React from "react";
 import TransactionForm from "../Pages/TransactionForm";
-import TransactionCart from "../charts/TransactionCart";
+import TransactionCart from "../Pages/TransactionCart";
 
 const Summary = ({ onClose,isOpen, totalExpense, totalIncome }) => {
   console.log(totalExpense,totalIncome);
