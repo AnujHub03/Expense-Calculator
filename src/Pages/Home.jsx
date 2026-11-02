@@ -7,7 +7,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useContext, useEffect } from "react";
-import Summary from "../summary/Summary";
+import Summary from "../Pages/Summary";
 import ExpenseView from "../Pages/ExpenseView";
 import { GlobContext } from "../Pages/Context";
 
