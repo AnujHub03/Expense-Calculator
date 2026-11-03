@@ -14,7 +14,7 @@ import {
   RadioGroup,
 } from "@chakra-ui/react";
 import React, { useContext } from "react";
-import { GlobContext } from "../context/Context";
+import { GlobContext } from "../Pages/Context";
 
 const TransactionForm = ({ onClose, isOpen }) => {
   const {
