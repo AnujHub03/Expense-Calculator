@@ -1,120 +1,159 @@
+
+import React, { useContext } from "react";
 import {
   Button,
-  FormControl,
-  FormLabel,
   Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Radio,
+  Dialog,
+  Field,
   RadioGroup,
+  VStack,
+  HStack,
 } from "@chakra-ui/react";
-import React, { useContext } from "react";
+
 import { GlobContext } from "../Pages/Context";
 
 const TransactionForm = ({ onClose, isOpen }) => {
   const {
     FormData,
     setFormData,
-    value,
-    setValue,
-    allTransactions,
-    setAllTransactions,
     handleSubmit,
   } = useContext(GlobContext);
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setFormData({ ...FormData, [name]: value });
-  } 
-    function handleFormSubmit(e) {
-  e.preventDefault();
-  handleSubmit(FormData); 
-  onClose();
-}
+
+    setFormData({
+      ...FormData,
+      [name]: value,
+    });
+  }
+
+  function handleFormSubmit(e) {
+    e.preventDefault();
+
+    handleSubmit(FormData);
+    onClose();
+  }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <form onSubmit={handleFormSubmit}>
-        <ModalOverlay>
-          <ModalContent>
-            <ModalHeader>Add New Transaction </ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <FormControl>
-                <FormLabel>Enter Description</FormLabel>
-                <Input
-                  type="text"
-                  name="description"
-                  onChange={handleChange}
-                  placeholder="Enter Transaction Description"
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Enter Amount</FormLabel>
-                <Input
-                  type="number"
-                  name="amount"
-                  onChange={handleChange}
-                  placeholder="Enter Transaction Amount"
-                />
-              </FormControl>
-              <RadioGroup
-                mt={"5"}
-                name="type"
-                onChange={setValue}
-                value={FormData.type}
-                
-              >
-                <FormLabel>Select Transaction Type</FormLabel>
-                <Radio
-                  checked={FormData.type === "income"}
-                  name="type"
-                  value="income"
-                  colorScheme="red"
-                  onChange={handleChange}
-                >
-                  Income
-                </Radio>
-                <Radio
-                  checked={FormData.type === "expense"}
-                  name="type"
-                  value="expense"
-                  colorScheme="red"
-                  onChange={handleChange}
-                >
-                  Expense
-                </Radio>
-              </RadioGroup>
-            </ModalBody>
-            <ModalFooter>
+    <Dialog.Root
+      open={isOpen}
+      onOpenChange={(e) => {
+        if (!e.open) onClose();
+      }}
+      placement="center"
+    >
+      <Dialog.Backdrop />
+
+      <Dialog.Positioner>
+        <Dialog.Content>
+          <form onSubmit={handleFormSubmit}>
+            <Dialog.Header>
+              <Dialog.Title>
+                Add New Transaction
+              </Dialog.Title>
+            </Dialog.Header>
+
+            <Dialog.CloseTrigger asChild>
               <Button
-                bg={"blue.400"}
-                color={"black"}
-                _hover={{ bg: "blue.500" }}
-                mr={3}
+                variant="ghost"
+                position="absolute"
+                top="2"
+                right="2"
+                size="sm"
+              >
+                ✕
+              </Button>
+            </Dialog.CloseTrigger>
+
+            <Dialog.Body>
+              <VStack gap={4} align="stretch">
+
+                <Field.Root required>
+                  <Field.Label>
+                    Enter Description
+                  </Field.Label>
+
+                  <Input
+                    type="text"
+                    name="description"
+                    value={FormData.description || ""}
+                    onChange={handleChange}
+                    placeholder="Enter Transaction Description"
+                  />
+                </Field.Root>
+
+                <Field.Root required>
+                  <Field.Label>
+                    Enter Amount
+                  </Field.Label>
+
+                  <Input
+                    type="number"
+                    name="amount"
+                    value={FormData.amount || ""}
+                    onChange={handleChange}
+                    placeholder="Enter Transaction Amount"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label>
+                    Select Transaction Type
+                  </Field.Label>
+
+                  <RadioGroup.Root
+                    value={FormData.type}
+                    onValueChange={(e) =>
+                      setFormData({
+                        ...FormData,
+                        type: e.value,
+                      })
+                    }
+                  >
+                    <HStack gap={4}>
+                      <RadioGroup.Item value="income">
+                        <RadioGroup.ItemHiddenInput />
+                        <RadioGroup.ItemIndicator />
+                        <RadioGroup.ItemText>
+                          Income
+                        </RadioGroup.ItemText>
+                      </RadioGroup.Item>
+
+                      <RadioGroup.Item value="expense">
+                        <RadioGroup.ItemHiddenInput />
+                        <RadioGroup.ItemIndicator />
+                        <RadioGroup.ItemText>
+                          Expense
+                        </RadioGroup.ItemText>
+                      </RadioGroup.Item>
+                    </HStack>
+                  </RadioGroup.Root>
+                </Field.Root>
+
+              </VStack>
+            </Dialog.Body>
+
+            <Dialog.Footer>
+              <Button
                 type="submit"
-                 onClick={onClose}
+                colorPalette="blue"
               >
                 Add Transaction
               </Button>
+
               <Button
+                type="button"
+                variant="outline"
                 onClick={onClose}
-                bg={"gray.300"}
-                color={"black"}
-                _hover={{ bg: "gray.400" }}
               >
                 Cancel
               </Button>
-            </ModalFooter>
-          </ModalContent>
-        </ModalOverlay>
-      </form>
-    </Modal>
+            </Dialog.Footer>
+          </form>
+        </Dialog.Content>
+      </Dialog.Positioner>
+    </Dialog.Root>
   );
 };
 
